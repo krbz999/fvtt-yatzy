@@ -1,0 +1,68 @@
+div.fvtt-yatzy {
+  min-width: 1200px;
+  min-height: 800px;
+}
+
+form.fvtt-yatzy {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: stretch;
+  font-weight: bold;
+}
+
+.fvtt-yatzy .legend,
+.fvtt-yatzy .score-board {
+  min-width: 12em;
+  text-align: center;
+}
+
+.fvtt-yatzy .score-board .category,
+.fvtt-yatzy .header {
+  justify-content: center;
+}
+
+.fvtt-yatzy .category {
+  min-height: 2em;
+  max-height: 2em;
+  display: flex;
+  align-items: center;
+  padding: 0 1em;
+  justify-content: space-between;
+}
+
+.fvtt-yatzy .category.defaulted {
+  background-color: inherit;
+}
+
+/* DICE ROLLS */
+.fvtt-yatzy .rollers {
+  display: grid;
+  gap: 2em;
+  margin-bottom: 1em;
+  grid-template-columns: 1fr 1fr;
+  max-height: 4em;
+  min-height: 4em;
+  width: 50%;
+  align-self: center;
+}
+
+.fvtt-yatzy .rollers .results {
+  font-size: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.fvtt-yatzy .results .die {
+  min-width: 60px;
+  border: 2px red groove;
+  aspect-ratio: 1/1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Font Awesome 5 Free';
+}
+
+.fvtt-yatzy .rollers .results .die.locked {
+  color: white;
+  background-color: red;
+}

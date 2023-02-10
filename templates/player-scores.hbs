@@ -1,0 +1,22 @@
+<div class="score-board" data-user-id="{{userId}}" {{#unless playing}}style="display: none;" {{/unless}}>
+  <div class="header player-name">{{name}}</div>
+  <input type="number" data-dtype="Number" class="upper category" value="{{upper.aces}}" disabled>
+  <input type="number" data-dtype="Number" class="upper category" value="{{upper.twos}}" disabled>
+  <input type="number" data-dtype="Number" class="upper category" value="{{upper.threes}}" disabled>
+  <input type="number" data-dtype="Number" class="upper category" value="{{upper.fours}}" disabled>
+  <input type="number" data-dtype="Number" class="upper category" value="{{upper.fives}}" disabled>
+  <input type="number" data-dtype="Number" class="upper category" value="{{upper.sixes}}" disabled>
+  <div class="category">{{upper.sum}}</div>
+  <div class="category">{{upper.bonus}}</div>
+  <input type="number" data-dtype="Number" class="lower category" value="{{lower.three-of-a-kind}}" disabled>
+  <input type="number" data-dtype="Number" class="lower category" value="{{lower.four-of-a-kind}}" disabled>
+  <input type="number" data-dtype="Number" class="lower category" value="{{lower.full-house}}" disabled>
+  <input type="number" data-dtype="Number" class="lower category" value="{{lower.small-straight}}" disabled>
+  <input type="number" data-dtype="Number" class="lower category" value="{{lower.large-straight}}" disabled>
+  <input type="number" data-dtype="Number" class="lower category" value="{{lower.yahtzee}}" disabled>
+  <input type="number" data-dtype="Number" class="lower category" value="{{lower.chance}}" disabled>
+
+  <section class="total">
+    <div class="category">{{final}}</div>
+  </section>
+</div>

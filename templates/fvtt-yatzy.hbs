@@ -1,0 +1,93 @@
+<div class="rollers">
+  <button type="button">
+    <i class="fa-solid fa-dice"></i> {{localize "YATZY.Roll"}}
+  </button>
+  <div class="results">
+    <a class="die"></a>
+    <a class="die"></a>
+    <a class="die"></a>
+    <a class="die"></a>
+    <a class="die"></a>
+  </div>
+</div>
+
+<form class="fvtt-yatzy">
+  <div class="legend">
+    <section class="upper">
+      <div class="header">{{localize "YATZY.MaximumPoints"}}</div>
+      <a class="category" data-category="aces">
+        <div class="name">{{localize "YATZY.Ones"}}</div>
+        <div class="maximum">5</div>
+      </a>
+      <a class="category" data-category="twos">
+        <div class="name">{{localize "YATZY.Twos"}}</div>
+        <div class="maximum">10</div>
+      </a>
+      <a class="category" data-category="threes">
+        <div class="name">{{localize "YATZY.Threes"}}</div>
+        <div class="maximum">15</div>
+      </a>
+      <a class="category" data-category="fours">
+        <div class="name">{{localize "YATZY.Fours"}}</div>
+        <div class="maximum">20</div>
+      </a>
+      <a class="category" data-category="fives">
+        <div class="name">{{localize "YATZY.Fives"}}</div>
+        <div class="maximum">25</div>
+      </a>
+      <a class="category" data-category="sixes">
+        <div class="name">{{localize "YATZY.Sixes"}}</div>
+        <div class="maximum">30</div>
+      </a>
+      <div class="category" data-tooltip="YATZY.SumTooltip">
+        <div class="name">{{localize "YATZY.Sum"}}</div>
+        <div class="maximum">&ge;64</div>
+      </div>
+      <div class="category">
+        <div class="name">{{localize "YATZY.Bonus"}}</div>
+        <div class="maximum">50</div>
+      </div>
+    </section>
+
+    <section class="lower">
+      <a class="category" data-tooltip="YATZY.ThreeOfAKindTooltip" data-category="three-of-a-kind">
+        <div class="name">{{localize "YATZY.ThreeOfAKind"}}</div>
+        <div class="maximum">18</div>
+      </a>
+      <a class="category" data-tooltip="YATZY.FourOfAKindTooltip" data-category="four-of-a-kind">
+        <div class="name">{{localize "YATZY.FourOfAKind"}}</div>
+        <div class="maximum">24</div>
+      </a>
+      <a class="category" data-tooltip="YATZY.FullHouseTooltip" data-category="full-house">
+        <div class="name">{{localize "YATZY.FullHouse"}}</div>
+        <div class="maximum">28</div>
+      </a>
+      <a class="category" data-tooltip="YATZY.StraightSmallTooltip" data-category="small-straight">
+        <div class="name">{{localize "YATZY.StraightSmall"}}</div>
+        <div class="maximum">30</div>
+      </a>
+      <a class="category" data-tooltip="YATZY.StraightLargeTooltip" data-category="large-straight">
+        <div class="name">{{localize "YATZY.StraightLarge"}}</div>
+        <div class="maximum">40</div>
+      </a>
+      <a class="category" data-tooltip="YATZY.YahtzeeTooltip" data-category="yahtzee">
+        <div class="name">{{localize "YATZY.Yahtzee"}}</div>
+        <div class="maximum">50</div>
+      </a>
+      <a class="category" data-tooltip="YATZY.ChanceTooltip" data-category="chance">
+        <div class="name">{{localize "YATZY.Chance"}}</div>
+        <div class="maximum">30</div>
+      </a>
+    </section>
+
+    <section class="total">
+      <div class="category">
+        <div class="name">{{localize "YATZY.FinalScore"}}</div>
+      </div>
+    </section>
+  </div>
+
+  {{#each board as |b|}}
+  {{{b}}}
+  {{/each}}
+</form>
