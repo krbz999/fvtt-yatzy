@@ -1,6 +1,6 @@
-div.fvtt-yatzy {
-  min-width: 1200px;
-  min-height: 800px;
+.app.fvtt-yatzy {
+  width: auto !important;
+  height: auto !important;
 }
 
 form.fvtt-yatzy {

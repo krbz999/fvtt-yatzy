@@ -1,5 +1,5 @@
-import { MODULE } from "./constants.mjs";
-import { playerScores } from "./playerScores.mjs";
+import {MODULE} from "./constants.mjs";
+import {playerScores} from "./playerScores.mjs";
 
 export class YatzyPlayer extends FormApplication {
   constructor(...T) {
@@ -7,7 +7,7 @@ export class YatzyPlayer extends FormApplication {
     this.scores = [];
     this._roll = 0;
     for (const user of game.users) {
-      const board = new playerScores(user, { board: this });
+      const board = new playerScores(user, {board: this});
       user.apps[board.appId] = board;
       this.scores.push(board);
     }
@@ -17,20 +17,19 @@ export class YatzyPlayer extends FormApplication {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       template: "modules/fvtt-yatzy/templates/fvtt-yatzy.hbs",
-      classes: [MODULE],
-      height: 800,
-      width: 1200,
-      resizable: true
+      classes: [MODULE.id],
+      resizable: false,
+      title: MODULE.title
     });
   }
 
   get id() {
-    return `${MODULE}-yatzyPlayer`;
+    return `${MODULE.id}-yatzyPlayer`;
   }
 
   async getData() {
     const board = await Promise.all(this.scores.map(s => s.render(true)));
-    return { board };
+    return {board};
   }
 
   activateListeners(html) {
@@ -38,8 +37,8 @@ export class YatzyPlayer extends FormApplication {
     const btn = html[0].querySelector(".rollers [type='button']");
     btn.addEventListener("click", async () => {
       const num = this._roll === 3 ? 5 : html[0].querySelectorAll(".rollers .results .die:not(.locked)").length;
-      const roll = await new Roll(`${num}d6`).evaluate({ async: true });
-      await roll.toMessage({ flavor: "Yahtzee!", speaker: ChatMessage.getSpeaker() });
+      const roll = await new Roll(`${num}d6`).evaluate({async: true});
+      await roll.toMessage({flavor: "Yahtzee!", speaker: ChatMessage.getSpeaker()});
       this._dice = [...html[0].querySelectorAll(".rollers .results .die.locked")].map(d => Number(d.innerText));
       this._dice.push(...roll.dice[0].results.map(d => d.result));
       this._roll = this._roll === 3 ? 1 : this._roll + 1;

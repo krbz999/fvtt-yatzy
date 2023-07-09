@@ -1,4 +1,4 @@
-import { MODULE } from "./constants.mjs";
+import {MODULE} from "./constants.mjs";
 
 export class playerScores extends FormApplication {
   constructor(player, options) {
@@ -10,33 +10,33 @@ export class playerScores extends FormApplication {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       template: "modules/fvtt-yatzy/templates/player-scores.hbs",
-      classes: [MODULE],
+      classes: [MODULE.id],
       height: 500,
       width: "max-content"
     });
   }
 
   get id() {
-    return `${MODULE}-${this.object.id}`;
+    return `${MODULE.id}-${this.object.id}`;
   }
 
   async getData() {
     const data = await super.getData();
     data.name = this.player.name;
     data.userId = this.player.id;
-    foundry.utils.mergeObject(data, this.player.flags[MODULE]);
-    foundry.utils.mergeObject(data, { playing: !!this.player.flags[MODULE] || this.player === game.user });
+    foundry.utils.mergeObject(data, this.player.flags[MODULE.id]);
+    foundry.utils.mergeObject(data, {playing: !!this.player.flags[MODULE.id] || this.player === game.user});
     return data;
   }
 
   async _updateObject(event, formData) {
-    formData = foundry.utils.flattenObject({ [`flags.${MODULE}`]: formData });
+    formData = foundry.utils.flattenObject({[`flags.${MODULE.id}`]: formData});
     await this.player.update(formData);
   }
 
   async render(...T) {
     const data = await this.getData();
-    foundry.utils.mergeObject(data, this.player.flags[MODULE]);
+    foundry.utils.mergeObject(data, this.player.flags[MODULE.id]);
     const temp = this.options.template;
     const r = await renderTemplate(temp, data);
     if (this.board.rendered) {
@@ -47,14 +47,14 @@ export class playerScores extends FormApplication {
 
   async close(...T) {
     //delete this.player.apps[this.appId];
-    await this.player.update({ [`flags.-=${MODULE}`]: null });
+    await this.player.update({[`flags.-=${MODULE.id}`]: null});
   }
 
   async performUpdate(category) {
     if (!category) return;
     const dice = this.board._dice;
-    const upper = `flags.${MODULE}.upper.${category}`;
-    const lower = `flags.${MODULE}.lower.${category}`;
+    const upper = `flags.${MODULE.id}.upper.${category}`;
+    const lower = `flags.${MODULE.id}.lower.${category}`;
 
     const a = foundry.utils.getProperty(this.player, upper);
     const b = foundry.utils.getProperty(this.player, lower);
@@ -80,15 +80,15 @@ export class playerScores extends FormApplication {
       const sum = dice.reduce((acc, e) => acc += (e === w ? e : 0), 0);
       if (sum === 0) return;
       const total = Object.keys(u).reduce((acc, e) => {
-        const t = foundry.utils.getProperty(this.player, `flags.${MODULE}.upper.${e}`) ?? (e === category ? sum : null);
+        const t = foundry.utils.getProperty(this.player, `flags.${MODULE.id}.upper.${e}`) ?? (e === category ? sum : null);
         if (!t) return acc;
         return acc + t;
       }, 0);
       console.log(total);
       return this.player.update({
         [upper]: sum,
-        [`flags.${MODULE}.upper.sum`]: total,
-        [`flags.${MODULE}.upper.bonus`]: total >= 64 ? 50 : 0
+        [`flags.${MODULE.id}.upper.sum`]: total,
+        [`flags.${MODULE.id}.upper.bonus`]: total >= 64 ? 50 : 0
       });
     }
 
@@ -97,7 +97,7 @@ export class playerScores extends FormApplication {
       const denom = dice.find(d => {
         return dice.filter(e => e === d).length >= kind;
       });
-      if (denom) return this.player.update({ [lower]: kind * denom });
+      if (denom) return this.player.update({[lower]: kind * denom});
       else return;
     }
 
@@ -109,39 +109,39 @@ export class playerScores extends FormApplication {
       const two = dice.find(d => {
         return dice.filter(e => e === d).length === 2;
       });
-      if (three && two) return this.player.update({ [lower]: 3 * three + 2 * two });
+      if (three && two) return this.player.update({[lower]: 3 * three + 2 * two});
       else return;
     }
 
     // straights.
     else if (category === "small-straight") {
       const has = [1, 2, 3, 4, 5].every(d => dice.includes(d));
-      if (has) return this.player.update({ [lower]: 30 });
+      if (has) return this.player.update({[lower]: 30});
       else return;
     } else if (category === "large-straight") {
       const has = [2, 3, 4, 5, 6].every(d => dice.includes(d));
-      if (has) return this.player.update({ [lower]: 40 });
+      if (has) return this.player.update({[lower]: 40});
       else return;
     }
 
     // yahtzee.
     else if (category === "yahtzee") {
       const has = new Set(dice).size === 1;
-      if (has) return this.player.update({ [lower]: 50 });
+      if (has) return this.player.update({[lower]: 50});
       else return;
     }
 
     // chance.
     else if (category === "chance") {
       const sum = dice.reduce((acc, e) => acc += e, 0);
-      return this.player.update({ [lower]: sum });
+      return this.player.update({[lower]: sum});
     }
   }
 
   async performFinalScore() {
-    const us = `flags.${MODULE}.upper.sum`;
-    const ub = `flags.${MODULE}.upper.bonus`;
-    const l = `flags.${MODULE}.lower`;
+    const us = `flags.${MODULE.id}.upper.sum`;
+    const ub = `flags.${MODULE.id}.upper.bonus`;
+    const l = `flags.${MODULE.id}.lower`;
 
     const keys = [
       "three-of-a-kind",
@@ -158,6 +158,6 @@ export class playerScores extends FormApplication {
       if (!val) return acc;
       return acc + val;
     }, 0);
-    return this.player.update({ [`flags.${MODULE}.final`]: final });
+    return this.player.update({[`flags.${MODULE.id}.final`]: final});
   }
 }

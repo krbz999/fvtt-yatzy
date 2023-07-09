@@ -1,1 +1,4 @@
-export const MODULE = "fvtt-yatzy";
+export const MODULE = {
+  id: "fvtt-yatzy",
+  title: "Foundry Yatzy"
+};
